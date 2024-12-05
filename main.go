@@ -8,5 +8,6 @@ import (
 
 func main() {
 	fmt.Println("Advent of Code 2024")
-	days.Day01()
+	distance, similarities := days.Day01()
+	fmt.Printf("Day 01 - Distance: %d, Similarities: %d", distance, similarities)
 }
