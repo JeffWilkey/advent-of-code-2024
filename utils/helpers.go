@@ -10,32 +10,36 @@ import (
 func ConvertStrToInt(columns []string) []int {
 	ints := make([]int, len(columns))
 
-	for _, column := range columns {
+	for index, column := range columns {
 		i, err := strconv.Atoi(column)
 		if err != nil {
 			log.Fatalf("Failed to convert column to int: %v", err)
 		}
-		ints = append(ints, i)
+		ints[index] = i
 	}
 	return ints
 }
 
-func GetColumnsFromInput(input string, delimeter string) ([]string, []string) {
-	// Split input by new line
-	var lColumn []string
-	var rColumn []string
+func GetLinesFromInput(input string) []string {
+	return strings.Split(input, "\n")
+}
 
-	lines := strings.Split(input, "\n")
+func GetColumnsFromInput(input string, delimiter string) [][]string {
+	lines := GetLinesFromInput(input)
+	var columns [][]string
 
-	// Split each line by space
 	for _, line := range lines {
-		columns := strings.Split(line, delimeter)
+		items := strings.Split(line, delimiter)
 
-		lColumn = append(lColumn, columns[0])
-		rColumn = append(rColumn, columns[1])
+		for i, item := range items {
+			if len(columns) <= i {
+				columns = append(columns, []string{})
+			}
+			columns[i] = append(columns[i], item)
+		}
 	}
 
-	return lColumn, rColumn
+	return columns
 }
 
 func ReadInput(path string) string {

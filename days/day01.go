@@ -9,7 +9,10 @@ import (
 
 func Day01() (int, int) {
 	input := utils.ReadInput("inputs/day01.txt")
-	lColumn, rColumn := utils.GetColumnsFromInput(input, "   ")
+	columns := utils.GetColumnsFromInput(input, "   ")
+
+	lColumn := columns[0]
+	rColumn := columns[1]
 
 	sort.Strings(lColumn)
 	sort.Strings(rColumn)
