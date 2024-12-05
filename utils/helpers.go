@@ -3,8 +3,22 @@ package utils
 import (
 	"log"
 	"os"
+	"strconv"
 	"strings"
 )
+
+func ConvertStrToInt(columns []string) []int {
+	ints := make([]int, len(columns))
+
+	for _, column := range columns {
+		i, err := strconv.Atoi(column)
+		if err != nil {
+			log.Fatalf("Failed to convert column to int: %v", err)
+		}
+		ints = append(ints, i)
+	}
+	return ints
+}
 
 func GetColumnsFromInput(input string, delimeter string) ([]string, []string) {
 	// Split input by new line

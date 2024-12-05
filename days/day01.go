@@ -3,7 +3,6 @@ package days
 import (
 	"math"
 	"sort"
-	"strconv"
 
 	"advent-of-code-2024/utils"
 )
@@ -15,29 +14,26 @@ func Day01() (int, int) {
 	sort.Strings(lColumn)
 	sort.Strings(rColumn)
 
-	return calculateTotalDistance(lColumn, rColumn), calculateSimilarity(lColumn, rColumn)
+	lColumnInts := utils.ConvertStrToInt(lColumn)
+	rColumnInts := utils.ConvertStrToInt(rColumn)
+
+	return calculateTotalDistance(lColumnInts, rColumnInts), calculateSimilarity(lColumnInts, rColumnInts)
 }
 
-func calculateTotalDistance(lColumn, rColumn []string) int {
+func calculateTotalDistance(lColumn, rColumn []int) int {
 	var distance int
 	for i := range lColumn {
-		l, _ := strconv.Atoi(lColumn[i])
-		r, _ := strconv.Atoi(rColumn[i])
-
-		distance += int(math.Abs(float64(l - r)))
+		distance += int(math.Abs(float64(lColumn[i] - rColumn[i])))
 	}
 	return distance
 }
 
-func calculateSimilarity(lColumn, rColumn []string) int {
+func calculateSimilarity(lColumn, rColumn []int) int {
 	var similarity int
-	for i := range lColumn {
-		l, _ := strconv.Atoi(lColumn[i])
-
+	for _, l := range lColumn {
 		appearances := 0
 
-		for j := range rColumn {
-			r, _ := strconv.Atoi(rColumn[j])
+		for _, r := range rColumn {
 			if l == r {
 				appearances++
 			}
