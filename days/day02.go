@@ -18,9 +18,7 @@ func calculateSafeLevels(lines []string, dampen bool) int {
 
 	for _, line := range lines {
 		levels := utils.ConvertStrToInt(strings.Split(line, " "))
-		if levelsAreSafe(levels) {
-			safeLevels++
-		} else if dampen && dampenedLevelsAreSafe(levels) {
+		if levelsAreSafe(levels) || (dampen && dampenedLevelsAreSafe(levels)) {
 			safeLevels++
 		}
 	}
@@ -29,7 +27,8 @@ func calculateSafeLevels(lines []string, dampen bool) int {
 
 func dampenedLevelsAreSafe(levels []int) bool {
 	for i := range levels {
-		newLevels := append([]int(nil), levels[:i]...)
+		newLevels := make([]int, 0, len(levels)-1)
+		newLevels = append(newLevels, levels[:i]...)
 		newLevels = append(newLevels, levels[i+1:]...)
 		if levelsAreSafe(newLevels) {
 			return true
@@ -41,7 +40,7 @@ func dampenedLevelsAreSafe(levels []int) bool {
 func levelsAreSafe(levels []int) bool {
 	var isIncreasing bool
 
-	for i := range len(levels) - 1 {
+	for i := 0; i < len(levels)-1; i++ {
 		curr := levels[i]
 		next := levels[i+1]
 
@@ -50,18 +49,11 @@ func levelsAreSafe(levels []int) bool {
 		}
 
 		if i == 0 {
-			if curr < next {
-				isIncreasing = true
-			} else {
-				isIncreasing = false
-			}
+			isIncreasing = curr < next
 		}
 
-		if isIncreasing && curr > next || next-curr > 3 {
-			return false
-		}
-
-		if !isIncreasing && curr < next || curr-next > 3 {
+		// Check if the sequence is not following the increasing/decreasing pattern or the difference is greater than 3
+		if (isIncreasing && curr > next) || (!isIncreasing && curr < next) || utils.Abs(curr-next) > 3 {
 			return false
 		}
 	}
