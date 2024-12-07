@@ -17,7 +17,7 @@ func calculateSafeLevels(lines []string, dampen bool) int {
 	var safeLevels int
 
 	for _, line := range lines {
-		levels := utils.ConvertStrToInt(strings.Split(line, " "))
+		levels := utils.ConvertStrSliceToInt(strings.Split(line, " "))
 		if levelsAreSafe(levels) || (dampen && dampenedLevelsAreSafe(levels)) {
 			safeLevels++
 		}

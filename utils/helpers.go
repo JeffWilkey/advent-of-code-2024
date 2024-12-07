@@ -14,7 +14,7 @@ func Abs(x int) int {
 	return x
 }
 
-func ConvertStrToInt(columns []string) []int {
+func ConvertStrSliceToInt(columns []string) []int {
 	ints := make([]int, len(columns))
 
 	for index, column := range columns {
@@ -25,6 +25,14 @@ func ConvertStrToInt(columns []string) []int {
 		ints[index] = i
 	}
 	return ints
+}
+
+func StrToInt(s string) int {
+	i, err := strconv.Atoi(s)
+	if err != nil {
+		log.Fatalf("Failed to convert string to int: %v", err)
+	}
+	return i
 }
 
 func GetLinesFromInput(input string) []string {

@@ -17,8 +17,8 @@ func Day01() (int, int) {
 	sort.Strings(lColumn)
 	sort.Strings(rColumn)
 
-	lColumnInts := utils.ConvertStrToInt(lColumn)
-	rColumnInts := utils.ConvertStrToInt(rColumn)
+	lColumnInts := utils.ConvertStrSliceToInt(lColumn)
+	rColumnInts := utils.ConvertStrSliceToInt(rColumn)
 
 	return calculateTotalDistance(lColumnInts, rColumnInts), calculateSimilarity(lColumnInts, rColumnInts)
 }
